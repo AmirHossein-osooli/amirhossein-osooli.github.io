@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Projects — Amir Hossein Osooli</title>
-<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -26,15 +26,384 @@ a { color: var(--accent); text-decoration: none; transition: color .25s; }
 a:hover { color: #a3c4e8; }
 body::before { content: ''; position: fixed; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: .6; }
 
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(11,14,18,.72); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--border-subtle); transition: padding .3s, background .3s; }
-nav.scrolled { padding: .85rem 2.5rem; background: rgba(11,14,18,.88); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 2.5rem; background: rgba(11,14,18,.72); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--border-subtle); transition: padding .3s, background .3s; }
+nav.scrolled { padding: 0.3rem 2.5rem; background: rgba(11,14,18,.88); }
+.nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 300; color: var(--text-bright); letter-spacing: .02em; cursor: pointer; transition: opacity .3s; }
+.nav-logo:hover { opacity: .8; }
+.nav-logo span { color: var(--accent); font-weight: 400; }
+
+.nav-logo-img { height: 110px; width: auto; cursor: pointer; transition: opacity .3s; display: block; }
+.nav-logo-img:hover { opacity: .8; }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: .82rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); position: relative; padding-bottom: 4px; transition: color .25s; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent); transition: width .3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 9rem 1.5rem 4rem; }
+.page-title { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--text-bright); margin-bottom: 3rem; }
+
+/* Project Grid */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+
+/* Project Card with Image */
+.project-card-img {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  display: block;
+  text-decoration: none;
+  position: relative;
+}
+.project-card-img:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  border-color: var(--accent);
+}
+
+/* Image Container */
+.project-image {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, rgba(127,168,212,.08), rgba(168,140,110,.08));
+}
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s, opacity .3s;
+}
+.project-card-img:hover .project-image img {
+  transform: scale(1.05);
+  opacity: .85;
+}
+
+/* Placeholder for missing images */
+.project-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg-card-hover), var(--bg-card));
+  color: var(--text-dim);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* Project Content */
+.project-content {
+  padding: 1.5rem;
+}
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: .8rem;
+}
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-bright);
+  line-height: 1.3;
+  flex: 1;
+}
+.project-date {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+.project-desc {
+  font-size: .85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border-radius: 3px;
+  padding: .2rem .6rem;
+}
+.project-footer {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.project-link {
+  font-size: .75rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  transition: color .2s;
+}
+.project-link:hover {
+  color: var(--accent);
+}
+.project-status {
+  margin-left: auto;
+  font-size: .7rem;
+  color: var(--accent2);
+  font-style: italic;
+}
+
+footer { text-align: center; padding: 3rem 1.5rem; border-top: 1px solid var(--border-subtle); font-size: .72rem; color: var(--text-dim); margin-top: 4rem; }
+footer a { color: var(--accent2); }
+
+@media (max-width: 700px) {
+  nav { padding: 1rem 1.2rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: .72rem; }
+  .container { padding: 8rem 1.2rem 3rem; }
+  .projects-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+@media (max-width: 420px) { .nav-links { gap: .6rem; } }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border); }
+::selection { background: var(--accent-glow); color: var(--text-bright); }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" style="text-decoration: none;">
+    <img src="assets/img/logo.png" alt="A. H. Osooli" class="nav-logo-img" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">about</a></li>
+    <li><a href="experience.html">experience</a></li>
+    <li><a href="projects.html" class="active">projects</a></li>
+    <li><a href="publications.html">publications</a></li>
+    <li><a href="awards.html">awards</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h1 class="page-title">Projects</h1>
+  
+  <div class="projects-grid">
+    
+    <!-- Project 1: Super-Resolution GAN -->
+    <a href="https://github.com/AmirHossein-osooli/SR-GAN-PT-OCT" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/sr-gan.jpg" alt="Super-Resolution GAN for PT-OCT" />
+        <!-- If no image, it will show placeholder -->
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">Super-Resolution GAN for PT-OCT</h3>
+          <span class="project-date">2025</span>
+        </div>
+        <p class="project-desc">GAN pipeline to enhance Photothermal Optical Coherence Tomography signals — presented at ICBME 2025.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">GANs</span>
+          <span class="project-tag">Deep Learning</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-status">Conference Publication</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 2: Maze Path-Planning -->
+    <a href="https://github.com/AmirHossein-osooli/Maze-path-planning" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/maze.jpg" alt="Maze Path-Planning" />
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">Maze Path-Planning</h3>
+          <span class="project-date">Jan 2025</span>
+        </div>
+        <p class="project-desc">Implemented classical and heuristic path-planning algorithms to solve mazes programmatically.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Algorithms</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 3: ROS Code Foundation -->
+    <a href="https://github.com/AmirHossein-osooli/Robot_Ignite_Code_Foundation_For_ROS" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/ros.jpg" alt="ROS Code Foundation" />
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">ROS Code Foundation</h3>
+          <span class="project-date">Jul 2023</span>
+        </div>
+        <p class="project-desc">Built foundational ROS Noetic packages on Ubuntu 20.04 following The Construct Academy curriculum.</p>
+        <div class="project-tags">
+          <span class="project-tag">ROS Noetic</span>
+          <span class="project-tag">Ubuntu</span>
+          <span class="project-tag">Python</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 4: TurtleBot Maze Navigation -->
+    <a href="https://github.com/AmirHossein-osooli/ROS-Micro-Project" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/turtlebot.jpg" alt="TurtleBot Maze Navigation" />
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">TurtleBot Maze Navigation</h3>
+          <span class="project-date">Jul 2023</span>
+        </div>
+        <p class="project-desc">Programmed a TurtleBot to autonomously navigate a maze environment using ROS Noetic.</p>
+        <div class="project-tags">
+          <span class="project-tag">ROS Noetic</span>
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Robotics</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 5: CFD -->
+    <a href="https://github.com/AmirHossein-osooli/Computational-Fluid-Dynamics-Spring-2022" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/cfd.jpg" alt="1-D Burgers' Equation" />
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">1-D Burgers' Equation (CFD)</h3>
+          <span class="project-date">Spring 2022</span>
+        </div>
+        <p class="project-desc">Solved the one-dimensional Burgers' equation using the Keller Box numerical scheme.</p>
+        <div class="project-tags">
+          <span class="project-tag">MATLAB</span>
+          <span class="project-tag">CFD</span>
+          <span class="project-tag">Numerical Methods</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 6: Arduino -->
+    <a href="https://github.com/AmirHossein-osooli/Fundamentals-of-Electeronics-ARDUINO-Spring-2022" class="project-card-img">
+      <div class="project-image">
+        <img src="assets/img/projects/arduino.jpg" alt="Temperature Valve Control" />
+      </div>
+      <div class="project-content">
+        <div class="project-header">
+          <h3 class="project-title">Temperature Valve Control (Arduino)</h3>
+          <span class="project-date">Spring 2022</span>
+        </div>
+        <p class="project-desc">Simulated a temperature valve control system using an Arduino board, visualised in Proteus.</p>
+        <div class="project-tags">
+          <span class="project-tag">C++ (Arduino)</span>
+          <span class="project-tag">Proteus</span>
+          <span class="project-tag">Embedded</span>
+        </div>
+        <div class="project-footer">
+          <span class="project-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Amir Hossein Osooli · Built for GitHub Pages · Tehran, Iran</p>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Handle missing images gracefully
+document.querySelectorAll('.project-image img').forEach(img => {
+  img.onerror = function() {
+    this.parentElement.innerHTML = '<div class="project-image-placeholder">Image Coming Soon</div>';
+  };
+});
+</script>
+</body>
+</html>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0b0e12; --bg-card: #121620; --bg-card-hover: #1a1f2e;
+  --text: #c8cdd8; --text-dim: #6b7280; --text-bright: #eef0f4;
+  --accent: #7fa8d4; --accent-glow: rgba(127,168,212,.18); --accent2: #a88c6e;
+  --border: rgba(127,168,212,.12); --border-subtle: rgba(255,255,255,.06);
+  --radius: 12px;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-decoration: none; transition: color .25s; }
+a:hover { color: #a3c4e8; }
+body::before { content: ''; position: fixed; inset: 0; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; opacity: .6; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 2.5rem; background: rgba(11,14,18,.72); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid var(--border-subtle); transition: padding .3s, background .3s; }
+nav.scrolled { padding: 0.3rem 2.5rem; background: rgba(11,14,18,.88); }
 .nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 300; color: var(--text-bright); letter-spacing: .02em; cursor: pointer; transition: opacity .3s; }
 .nav-logo:hover { opacity: .8; }
 .nav-logo span { color: var(--accent); font-weight: 400; }
 
 /* Logo Image */
 .nav-logo-img {
-  height: 110.00px;
+  height: 110px;
   width: auto;
   cursor: pointer;
   transition: opacity .3s;
@@ -49,7 +418,7 @@ nav.scrolled { padding: .85rem 2.5rem; background: rgba(11,14,18,.88); }
 .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-.container { max-width: 960px; margin: 0 auto; padding: 7rem 1.5rem 4rem; }
+.container { max-width: 960px; margin: 0 auto; padding: 9rem 1.5rem 4rem; }
 .page-title { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--text-bright); margin-bottom: 3rem; }
 
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
@@ -74,7 +443,7 @@ footer a { color: var(--accent2); }
   nav { padding: 1rem 1.2rem; }
   .nav-links { gap: 1rem; }
   .nav-links a { font-size: .72rem; }
-  .container { padding: 5rem 1.2rem 3rem; }
+  .container { padding: 8rem 1.2rem 3rem; }
 }
 @media (max-width: 420px) { .nav-links { gap: .6rem; } }
 ::-webkit-scrollbar { width: 6px; }
